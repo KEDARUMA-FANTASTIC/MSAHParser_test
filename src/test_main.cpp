@@ -94,7 +94,27 @@ void parser_handler(uint32_t element_count, const char* element_name, uint16_t e
     String part_value_str;
     concat_str(part_value_str, part_of_value, part_of_value_length);
 
-    printf("count:%d, name:【%s】:%d, value:{%s}:%d\n", element_count, elem_name_str.c_str(), element_name_length, part_value_str.c_str(), part_of_value_length);
+    // count:###1, name:[###2]:###3, value:{###4}:###5
+    // ###1 - Number of elements found
+    // ###2 - Element found
+    // ###3 - Length of found element
+    // ###4 - Value
+    // ###5 - Length of value
+    // *The value will be output from the found element to the previous element
+    Serial.print(F("count:"));
+    Serial.print(element_count);
+
+    Serial.print(F(", name:["));
+    Serial.print(elem_name_str);
+    Serial.print(F("]:"));
+    Serial.print(element_name_length);
+
+    Serial.print(F(", value:["));
+    Serial.print(part_value_str);
+    Serial.print(F("]:"));
+    Serial.print(part_of_value_length);
+
+    Serial.print(F("\n"));
 }
 
 } // namespace
@@ -111,17 +131,21 @@ void test_html_parse()
 
 void test_xml_parse()
 {
+    MSAHParser parser(parser_handler);
 
+    for (int i = 0; i != w3c_xml_example_food_menu_xml[i]; i ++) {
+        parser.write(w3c_xml_example_food_menu_xml[i]);
+    }
 }
 
 void setup() {
     delay(2000);
 
-//    UNITY_BEGIN();
-//
-//    RUN_TEST(test_html_parse);
-//
-//    UNITY_END();
+    Serial.begin(9600);
+    Serial.println("\n\n\nhello!!!");
+
+    test_html_parse();
+    test_xml_parse();
 }
 
 
