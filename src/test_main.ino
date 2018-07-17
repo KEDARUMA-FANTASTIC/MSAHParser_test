@@ -117,9 +117,6 @@ void parser_handler(uint32_t element_count, const char* element_name, uint16_t e
     Serial.print(F("\n"));
 }
 
-} // namespace
-
-
 void test_html_parse()
 {
     MSAHParser parser(parser_handler);
@@ -137,6 +134,9 @@ void test_xml_parse()
         parser.write(w3c_xml_example_food_menu_xml[i]);
     }
 }
+
+} // namespace
+
 
 void setup() {
     delay(2000);
